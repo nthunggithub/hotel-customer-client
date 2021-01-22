@@ -1,0 +1,1 @@
+export const URL_Website = 'https://hotel-customer-client.herokuapp.com/';
