@@ -133,7 +133,7 @@ export default function CartTable() {
                         {item.TrangThai === "1" ? "Chưa nhận phòng" : item.TrangThai === "2" ? "Đã nhận" : "Đã huỷ"}
                       </TableCell>
                       {item.TrangThai === "1" ? <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
-                        <Button variant="primary" onClick={() => handleShow(item)}>
+                        <Button variant="primary" style={{ color: "white", fontSize: "10px" }} onClick={() => handleShow(item)}>
                           Chỉnh sửa
                         </Button>
                       </TableCell> : <TableCell></TableCell>

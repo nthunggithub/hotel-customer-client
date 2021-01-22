@@ -11,7 +11,7 @@ function RoomInfo({ roomInfo }) {
                     </div>
                 </article>
                 <br />
-                <h1 class="entry-title">{roomInfo.TenP}</h1>
+                <h1 class="entry-title">{roomInfo.TenP? roomInfo.TenP: 'Phòng XXX'}</h1>
                 <br />
                 <Grid container xs={12} >
                     <h1 class="entry-title">Giá thuê: {roomInfo.GiaThue * 1000} VNĐ</h1>

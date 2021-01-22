@@ -22,7 +22,7 @@ function EditBills({ askEditBills, handleCloseEditBills, item }) {
         <Paper container className={classes.paper}>
           <div class="contentCenter">
             <Modal.Header >
-              <Modal.Title class="contentAdd">Cập nhật phiếu đặt phòng</Modal.Title>
+              <Modal.Title class="contentAdd">Cập nhật phiếu đặt phòng: {item.TenP}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>

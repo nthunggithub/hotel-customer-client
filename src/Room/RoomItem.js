@@ -17,7 +17,7 @@ function RoomItem({ room }) {
             />
           </a>
         </div>
-        <h2 class="title">{room.TenP}</h2>
+        <h2 class="title">{room.TenP? room.TenP: 'Phòng XXX'}</h2>
         </Link>
         <p class="price">Chỉ với {room.GiaThue * 1000}đ/ngày</p>
         <div class="upper">
