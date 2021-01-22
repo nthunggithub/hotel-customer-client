@@ -28,7 +28,7 @@ function RoomInfo({ roomInfo }) {
                 <Grid container xs={12} >
                     <Grid container xs={12} sm={4} >
                         <Grid container xs={12} sm={5} className="titleInfo">Trạng thái:</Grid>
-                        <Grid container xs={12} sm={7} className="cntInfo">{roomInfo.TrangThai}</Grid>
+                        <Grid container xs={12} sm={7} className="cntInfo">{roomInfo.TrangThai === "2" ? "Đã thuê dài hạn" : roomInfo.TrangThai === "3" ? "Đang sửa chữa" : "Sẵn sàng"}</Grid>
                     </Grid>
                     <Grid container xs={12} sm={4}>
                         <Grid container xs={12} sm={6} className="titleInfo">Loại phòng:</Grid>
