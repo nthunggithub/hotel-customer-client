@@ -6,6 +6,7 @@ import IncreDecreChild from "./IncreDecreChild";
 import IncreDecreAdult from "./IncreDecreAdult";
 import Grid from '@material-ui/core/Grid';
 import api from '../callapi';
+import { useHistory } from 'react-router-dom';
 // import TextField from '@material-ui/core/TextField';
 // import AdapterDateFns from '@material-ui/lab/dateAdapter/date-fns';
 // import LocalizationProvider from '@material-ui/lab/localization-provider';
@@ -27,15 +28,23 @@ function Booking({ roomInfo, match }) {
     const [book, setBook] = useState();
     const [price, setPrice] = useState(roomInfo ? roomInfo.GiaThue : 0);
     const [notify, setNotify] = useState('')
+    const history = useHistory();
     const handleSubmitBooking = async (e) => {
         e.preventDefault();
         if (!(adult) || !price)
             setNotify("Thiếu thông tin!");
         else {
+
             let beginDate = new Date(startDate).yyyymmdd();
             let finishedDate = new Date(endDate).yyyymmdd();
-            let res = await api.post("/api/createreservation", { roomId: match.params.id, userId: parseInt(localStorage.getItem("MaKH")), arrivalDate: beginDate, departureDate: finishedDate, adults: adult, childs: child, cost: price, status: 1 })
-            setNotify(res.data.message);
+            try {
+                let res = await api.post("/api/createreservation", { roomId: match.params.id, userId: parseInt(localStorage.getItem("MaKH")), arrivalDate: beginDate, departureDate: finishedDate, adults: adult, childs: child, cost: price, status: 1 })
+                console.log(res);
+                setNotify(res.data.message);
+                history.push('/bills');
+            } catch (error) {
+                setNotify(error.response.data.message);
+            }
         }
     }
 
@@ -100,7 +109,7 @@ function Booking({ roomInfo, match }) {
                             <div class="check_availability-field">
                                 <label>Ngày nhận</label>
                                 <DatePicker
-                                    dateFormat="yyyy/MM/dd"
+                                    dateFormat="dd/MM/yyyy"
                                     selected={startDate}
                                     onChange={date => handleChangeBeginDate(date)}
                                     selectsStart
@@ -112,7 +121,7 @@ function Booking({ roomInfo, match }) {
                                 <label>Ngày trả</label>
                                 {/* <input type="text" class="awe-calendar awe-input to" placeholder="Ngày trả" /> */}
                                 <DatePicker
-                                    dateFormat="yyyy/MM/dd"
+                                    dateFormat="dd/MM/yyyy"
                                     selected={endDate}
                                     onChange={date => handleChangeEndDate(date)}
                                     selectsEnd
@@ -136,7 +145,7 @@ function Booking({ roomInfo, match }) {
                             <div class="check_availability-field">
                                 <Grid container xs={12}>
                                     <Grid xs={5}><label>Tạm tính:</label></Grid>
-                                    <Grid xs={6}><label>{price * 1000} VNĐ</label></Grid>
+                                    <Grid xs={6}><label>{(price * 1000).toLocaleString('vi', {style : 'currency', currency : 'VND'})}</label></Grid>
                                 </Grid>
                             </div>
                             <button class="awe-btn awe-btn-13" type="submit">ĐẶT PHÒNG</button>

@@ -19,7 +19,7 @@ function RoomItem({ room }) {
         </div>
         <h2 class="title">{room.TenP? room.TenP: 'Phòng XXX'}</h2>
         </Link>
-        <p class="price">Chỉ với {room.GiaThue * 1000}đ/ngày</p>
+        <p class="price">Chỉ với {(room.GiaThue * 1000).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}/ngày</p>
         <div class="upper">
           <p>
             <span  style={{fontSize:"18px"}}>{room.LoaiP}</span>

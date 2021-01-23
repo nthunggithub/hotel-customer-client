@@ -14,13 +14,13 @@ function RoomInfo({ roomInfo }) {
                 <h1 class="entry-title">{roomInfo.TenP? roomInfo.TenP: 'Phòng XXX'}</h1>
                 <br />
                 <Grid container xs={12} >
-                    <h1 class="entry-title">Giá thuê: {roomInfo.GiaThue * 1000} VNĐ</h1>
+                    <h1 class="entry-title">Giá thuê: {(roomInfo.GiaThue * 1000).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} VNĐ</h1>
                 </Grid>
                 {parseInt(roomInfo.KhuyenMai ? roomInfo.KhuyenMai : 0) > 0 ? <> <Grid container xs={12}>
                     <Grid container xs={12} sm={2} className="titleInfo">Khuyến mãi: </Grid>
                     <Grid container xs={12} sm={2} className="cntInfo">{roomInfo.KhuyenMai}%</Grid>
                 </Grid> <Grid container xs={12} >
-                        <h1 class="entry-title"><div >Chỉ còn: {roomInfo.GiaThue * (100 - roomInfo.KhuyenMai) / 100 * 1000} VNĐ</div></h1>
+                        <h1 class="entry-title"><div >Chỉ còn: {(roomInfo.GiaThue * (100 - roomInfo.KhuyenMai) / 100 * 1000).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} VNĐ</div></h1>
                     </Grid> </> : ''}
 
 

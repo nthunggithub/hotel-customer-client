@@ -61,7 +61,7 @@ function Search({ setRooms }) {
                             <div class="check_availability-field">
                                 <label>Ngày nhận: &nbsp;</label>
                                 <DatePicker
-                                    dateFormat="yyyy/MM/dd"
+                                    dateFormat="dd/MM/yyyy"
                                     selected={startDate}
                                     onChange={date => setStartDate(date)}
                                     selectsStart
@@ -74,7 +74,7 @@ function Search({ setRooms }) {
                             <div class="check_availability-field">
                                 <label>Ngày trả: &nbsp;</label>
                                 <DatePicker
-                                    dateFormat="yyyy/MM/dd"
+                                    dateFormat="dd/MM/yyy"
                                     selected={endDate}
                                     onChange={date => setEndDate(date)}
                                     selectsEnd

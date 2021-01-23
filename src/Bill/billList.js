@@ -25,6 +25,15 @@ Date.prototype.yyyymmdd = function () {
   (dd > 9 ? '' : '0') + dd
   ].join('/');
 };
+Date.prototype.ddmmyyyy = function () {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [(dd > 9 ? '' : '0') + dd,
+  (mm > 9 ? '' : '0') + mm,
+  this.getFullYear()
+  ].join('/');
+};
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
@@ -63,6 +72,7 @@ export default function CartTable() {
   useEffect(() => {
     const fetchData = async () => {
       let res = await api.get("getbills");
+      res.data.reverse();
       setCartData(res.data);
     }
     fetchData()
@@ -77,6 +87,14 @@ export default function CartTable() {
       setCartData(res1.data);
     }
     setShow(false);
+  }
+  const ddmmyyyToyyyymmdd = (dateString) => {
+    var dateString = "23/10/2015"; // Oct 23
+
+    var dateParts = dateString.split("/");
+
+    // month is 0-based, that's why we need dataParts[1] - 1
+    return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).yyyymmdd();
   }
   return (
     <>
@@ -100,8 +118,8 @@ export default function CartTable() {
                   <StyledTableCell align="center" style={{ fontSize: "15px" }}>Số người lớn</StyledTableCell>
                   <StyledTableCell align="center" style={{ fontSize: "15px" }}>Số trẻ em</StyledTableCell>
                   <StyledTableCell align="center" style={{ fontSize: "15px" }}>Tạm tính</StyledTableCell>
-                  <StyledTableCell align="center" style={{ fontSize: "15px" }}>Trạng thái</StyledTableCell>
-                  <StyledTableCell align="center" style={{ borderTopRightRadius: 30, fontSize: "15px" }}>Chỉnh sửa</StyledTableCell>
+                  <StyledTableCell align="center" style={{ borderTopRightRadius: 30, fontSize: "15px" }}>Trạng thái</StyledTableCell>
+                  {/* <StyledTableCell align="center" style={{ borderTopRightRadius: 30, fontSize: "15px" }}>Chỉnh sửa</StyledTableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -112,13 +130,13 @@ export default function CartTable() {
                         {item.TenP}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
-                        {item.NgayTao ? new Date(item.NgayTao).yyyymmdd() : ''}
+                        {item.NgayTao ? new Date(item.NgayTao).ddmmyyyy() : ''}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
-                        {item.NgayNhanPhong ? new Date(item.NgayNhanPhong).yyyymmdd() : ''}
+                        {item.NgayNhanPhong ? new Date(item.NgayNhanPhong).ddmmyyyy() : ''}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
-                        {item.NgayTraPhong ? new Date(item.NgayTraPhong).yyyymmdd() : ''}
+                        {item.NgayTraPhong ? new Date(item.NgayTraPhong).ddmmyyyy() : ''}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
                         {item.SoNguoiLon}
@@ -127,17 +145,17 @@ export default function CartTable() {
                         {item.SoTreEm}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
-                        {item.TongTien * 1000} VNĐ
+                        {(item.TongTien * 1000).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
                       </TableCell>
                       <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
                         {item.TrangThai === "1" ? "Chưa nhận phòng" : item.TrangThai === "2" ? "Đã nhận" : "Đã huỷ"}
                       </TableCell>
-                      {item.TrangThai === "1" ? <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
+                      {/* {item.TrangThai === "1" ? <TableCell style={{ color: "white", fontSize: "15px" }} align="center">
                         <Button variant="primary" style={{ color: "white", fontSize: "10px" }} onClick={() => handleShow(item)}>
                           Chỉnh sửa
                         </Button>
                       </TableCell> : <TableCell></TableCell>
-                      }
+                      } */}
 
                     </StyledTableRow>
                   })
